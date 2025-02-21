@@ -38,11 +38,6 @@
 
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-shashwat">https://github.com/cal-cs184-student/sp25-hw1-shashwat</a>
 
-		<figure>
-			<img src="lion.jpg" alt="Lion" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
-
 		<!--
 		We've already added one heading per task, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
@@ -54,7 +49,10 @@
 		For my basic implementation, I used the idea from lecture 2 of looping through the raster grid and checking each pixel’s midpoint, using a function called is_inside_triangle which returns true if the pixel needs to be colored and false if not. To ensure that the entire triangle is within the raster grid, I first computed min_x, min_y, max_x and max_y, which are the x and y edges of the triangle computed using the input vertices. If is_inside_triangle returns true, the rasterize_triangle function colors that pixel. To implement the actual is_inside_triangle function, I ran the line equation tests but was running into the issue of clockwise vertex orderings not returning “true”. To fix this, I used an idea from Discussion 2: flip any two vertices to change the winding order from clockwise to anti-clockwise in the case that (x1 - x0) * (y2 - y1) - (x2 - x1) * (y1 - y0) < 0, indicating a negative z-axis as per the right hand rule.
 		
 		My algorithm is no worse than one that checks each sample within the bounding box of the triangle because that is exactly what my algorithm is. I first get the bounds of the bounding box by using the min and max coordinates of the three vertices. Then, I check each sample within this box using the is_inside_triangle function.
-
+		<figure>
+			<img src="t1.png" alt="test4" style="width:50%"/>
+			<figcaption>Cube Man Swimming</figcaption>
+		</figure>
 		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
