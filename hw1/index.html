@@ -109,6 +109,47 @@
 			<li>Add the 0.5 offset only at the start of the loops (twice) rather than within each iteration.</li>
 			<li>Precompute variables like <code>x1 - x0</code> into <code>diff_1</code>, <code>y2 - y1</code> into <code>diff_5</code>, etc., to reduce computations.</li>
 		</ul>
+		
+		<h2>Task 2: Antialiasing by Supersampling</h2>
+		I supersampled triangles by changing my implementation in rasterize_triangle to sample at a higher rate, i.e. sample sample_rate times within each pixel. I kept track of these sampled subpixels inside the sample_buffer, which is now larger to account for width * height * sample_rate pixels. I did not call fill_pixel here, instead opting to directly modify the sample_buffer inside the quadruple for loops. For the lines and points, I modified the call to fill_pixel so that it knows how to correctly index into the sample_buffer and fill in entire pixels with the same line/point color, doing so by looping through the subpixels of the pixel in double for loops just like in rasterize_triangle. Lastly, when resolving to framebuffer, I averaged the subpixels of each pixel by looping through them and adding them to a color, then dividing by the sample_rate before putting the color in rgb_framebuffer_target.
+		
+		Supersampling is useful because it allows for anti-aliasing the image, filtering out “jaggies” such as in the triangle corner seen below. By sampling at a higher frequency than the display has enough pixels for, then averaging those pixels, the overall effect is that the image is smoother and more realistic, since edges are blurred rather than being in staircase like patterns. The main part of the rasterization pipeline that was modified was the resolve_to_framebuffer() function, which needed to accommodate a sample_buffer size that is larger than the framebuffer size.
+
+		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="T2.1.png" width="400px"/>
+				  <figcaption>Supersampling Rate = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="T2.4.png" width="400px"/>
+				  <figcaption>Supersampling Rate = 4</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="T2.16.png" width="400px"/>
+				  <figcaption>Supersampling Rate = 16</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h2>Task 3: Transforms</h2>
+		I rotated the front half of cube man's left arm and his entire body so that it looks like he is swimming. He is either wearing a golden swimming cap or a scuba diving helmet. His right arm has been rotated to be in a downstroke, while his left is in an upstroke. His legs are elongated because he is wearing diving flippers.
+		<figure>
+			<img src="swimming.png" alt="Swimming Man" style="width:50%"/>
+			<figcaption>Cube Man Swimming</figcaption>
+		</figure>
+		<h2>Task 4: Barycentric coordinates</h2>
+		Barycentric coordinates are a way to track points with reference with reference to the sides of a polygon (in this class, specifically only to the sides of a triangle). For example, the image below displays a triangle with each of it’s vertices given a maximum R, G or B value respectively, and all other points in between are colored as per their barycentric coordinates. The higher the alpha value is, the farther the point is to the red vertex, and therefore is less red itself, and similarly for other colors. The sum of alpha, beta and gamma, the three barycentric coordinates, must always be one because the points lie within the triangle, and if any of alpha, beta or gamma are equal to one then we are at the respective vertex (maximum closeness). Also, gamma = 1 - alpha - beta, so we really only need two additional points to compute where our point is.
+
+		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
+		Pixel sampling is the process of sampling the texture in the uv-plane into the xy-plane, going through a non-linear map. Since the map is not linear, bilinear mapping requires a weighted average of the four closest points to the uv coordinate, depending on which part of the pixel the uv coordinate is closest to. In the rasterization function, I needed Barycentric coordinates to interpolate the uv coordinates for each pair of xy coordinates, doing so if the points were inside the triangle. Nearest sampling simply rounds the uv-coordinate to the nearest available integer values and samples it.
+		
+		As seen below, bilinear sampling produces a smoother rendition of the image regardless of the sampling rate, with less distinct pixels in the streaks of the parrot. There might be a large difference between the two when the xy-plane is much larger than the uv-plane, in which case nearest neighbour will magnify the pixelation in the uv-plane further into the xy-plane, while bilinear will be relatively smooth. This is because 1 texel is mapping to more than 1 pixel, so sampling more than 1 texel as in the bilinear approach provides a more robust algorithm.
 
 		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -135,28 +176,35 @@
 			  </tr>
 			</table>
 		</div>
-		
-		<h2>Task 2: Antialiasing by Supersampling</h2>
-		I supersampled triangles by changing my implementation in rasterize_triangle to sample at a higher rate, i.e. sample sample_rate times within each pixel. I kept track of these sampled subpixels inside the sample_buffer, which is now larger to account for width * height * sample_rate pixels. I did not call fill_pixel here, instead opting to directly modify the sample_buffer inside the quadruple for loops. For the lines and points, I modified the call to fill_pixel so that it knows how to correctly index into the sample_buffer and fill in entire pixels with the same line/point color, doing so by looping through the subpixels of the pixel in double for loops just like in rasterize_triangle. Lastly, when resolving to framebuffer, I averaged the subpixels of each pixel by looping through them and adding them to a color, then dividing by the sample_rate before putting the color in rgb_framebuffer_target.
-		
-		Supersampling is useful because it allows for anti-aliasing the image, filtering out “jaggies” such as in the triangle corner seen below. By sampling at a higher frequency than the display has enough pixels for, then averaging those pixels, the overall effect is that the image is smoother and more realistic, since edges are blurred rather than being in staircase like patterns. The main part of the rasterization pipeline that was modified was the resolve_to_framebuffer() function, which needed to accommodate a sample_buffer size that is larger than the framebuffer size.
-
-		<h2>Task 3: Transforms</h2>
-		I rotated the front half of cube man's left arm and his entire body so that it looks like he is swimming. He is either wearing a golden swimming cap or a scuba diving helmet. His right arm has been rotated to be in a downstroke, while his left is in an upstroke. His legs are elongated because he is wearing diving flippers.
-		<figure>
-			<img src="swimming.png" alt="Swimming Man" style="width:50%"/>
-			<figcaption>Cube Man Swimming</figcaption>
-		</figure>
-		<h2>Task 4: Barycentric coordinates</h2>
-		Barycentric coordinates are a way to track points with reference with reference to the sides of a polygon (in this class, specifically only to the sides of a triangle). For example, the image below displays a triangle with each of it’s vertices given a maximum R, G or B value respectively, and all other points in between are colored as per their barycentric coordinates. The higher the alpha value is, the farther the point is to the red vertex, and therefore is less red itself, and similarly for other colors. The sum of alpha, beta and gamma, the three barycentric coordinates, must always be one because the points lie within the triangle, and if any of alpha, beta or gamma are equal to one then we are at the respective vertex (maximum closeness). Also, gamma = 1 - alpha - beta, so we really only need two additional points to compute where our point is.
-
-		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Pixel sampling is the process of sampling the texture in the uv-plane into the xy-plane, going through a non-linear map. Since the map is not linear, bilinear mapping requires a weighted average of the four closest points to the uv coordinate, depending on which part of the pixel the uv coordinate is closest to. In the rasterization function, I needed Barycentric coordinates to interpolate the uv coordinates for each pair of xy coordinates, doing so if the points were inside the triangle. Nearest sampling simply rounds the uv-coordinate to the nearest available integer values and samples it.
-		
-		As seen below, bilinear sampling produces a smoother rendition of the image regardless of the sampling rate, with less distinct pixels in the streaks of the parrot. There might be a large difference between the two when the xy-plane is much larger than the uv-plane, in which case nearest neighbour will magnify the pixelation in the uv-plane further into the xy-plane, while bilinear will be relatively smooth. This is because 1 texel is mapping to more than 1 pixel, so sampling more than 1 texel as in the bilinear approach provides a more robust algorithm.
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="lion.jpg" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="lion.jpg" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="lion.jpg" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="lion.jpg" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
