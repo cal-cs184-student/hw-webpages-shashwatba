@@ -115,22 +115,21 @@
 		
 		Supersampling is useful because it allows for anti-aliasing the image, filtering out “jaggies” such as in the triangle corner seen below. By sampling at a higher frequency than the display has enough pixels for, then averaging those pixels, the overall effect is that the image is smoother and more realistic, since edges are blurred rather than being in staircase like patterns. The main part of the rasterization pipeline that was modified was the resolve_to_framebuffer() function, which needed to accommodate a sample_buffer size that is larger than the framebuffer size.
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="T2.1.png" width="400px"/>
+				  <img src="T2.1.png"/>
 				  <figcaption>Supersampling Rate = 1</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="T2.4.png" width="400px"/>
+				  <img src="T2.4.png"/>
 				  <figcaption>Supersampling Rate = 4</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="T2.16.png" width="400px"/>
+				  <img src="T2.16.png"/>
 				  <figcaption>Supersampling Rate = 16</figcaption>
 				</td>
 			  </tr>
