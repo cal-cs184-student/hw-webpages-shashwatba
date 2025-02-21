@@ -87,7 +87,8 @@
 			</tbody>
 		</table>
 	
-		The main adjustment I made was one in which I implemented a way to reduce unnecessary checks for points outside the triangle, once I have hit the border. Within each iteration, I checked <code> if (inside) {
+		The main adjustment I made was one in which I implemented a way to reduce unnecessary checks for points outside the triangle, once I have hit the border. Within each iteration, I checked:
+		if (inside) {
 			if (!inside_found) {
 				start_x = x; // mark left edge as found, and where it is
 				inside_found = true;
@@ -96,7 +97,9 @@
 		}
 		else if (inside_found) { // This means I shouldn't be iterating anymore since I found the triangle elsewhere, so I can safely break.
 			break;
-		}</code>. I repeat this for each row so that I don't keep iterating past the right edge, ever. Some minor adjustments I made were:
+		}.
+		
+		I repeat this for each row so that I don't keep iterating past the right edge, ever. Some minor adjustments I made were:
 		<ul>
 			<li>Fill in the sample buffer all at once, after iterating through each row. This might be faster due to spatial locality in the cache, as opposed to sample buffer memory accesses being interspersed with computations.</li>
 			<li>Check the winding number <i>before</i> sampling all the points, swapping vertices only once.</li>
