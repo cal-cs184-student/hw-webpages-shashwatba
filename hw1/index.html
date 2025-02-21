@@ -98,6 +98,7 @@
 			break;
 		}</code>. I repeat this for each row so that I don't keep iterating past the right edge, ever. Some minor adjustments I made were:
 		<ul>
+			<li>Fill in the sample buffer all at once, after iterating through each row. This might be faster due to spatial locality in the cache, as opposed to sample buffer memory accesses being interspersed with computations.</li>
 			<li>Check the winding number <i>before</i> sampling all the points, swapping vertices only once.</li>
 			<li>Remove helper functions to eliminate unnecessary memory accesses.</li>
 			<li>Add the 0.5 offset only at the start of the loops (twice) rather than within each iteration.</li>
