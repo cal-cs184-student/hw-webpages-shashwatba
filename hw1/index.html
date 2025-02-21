@@ -59,40 +59,48 @@
 			<thead>
 				<tr>
 					<th>Test Number</th>
-					<th>Unoptimized Runtime (s)</th>
-					<th>Optimized Runtime (s)</th>
+					<th>Unoptimized Runtime (seconds)</th>
+					<th>Optimized Runtime (seconds)</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>test3.svg</td>
 					<td>0.015</td>
-					<td>0.003</td>
+					<td>0.007</td>
 				</tr>
 				<tr>
 					<td>test4.svg</td>
 					<td>0.001</td>
-					<td>0.0005</td>
+					<td>0</td>
 				</tr>
 				<tr>
 					<td>test5.svg</td>
 					<td>0.003</td>
-					<td>0.001</td>
+					<td>0</td>
 				</tr>
 				<tr>
 					<td>test6.svg</td>
 					<td>0.002</td>
-					<td>0.0008</td>
+					<td>0</td>
 				</tr>
 			</tbody>
 		</table>
 	
-		Adjustments Made:
+		The main adjustment I made was one in which I implemented a way to reduce unnecessary checks for points outside the triangle, once I have hit the border. Within each iteration, I checked <code> if (inside) {
+			if (!inside_found) {
+				start_x = x; // mark left edge as found, and where it is
+				inside_found = true;
+			}
+			end_x = x;  // mark right edge as found (with the rightmost point so far)
+		}
+		else if (inside_found) { // This means I shouldn't be iterating anymore since I found the triangle elsewhere, so I can safely break.
+			break;
+		}<code>. I repeat this for each row so that I don't keep iterating past the right edge, ever. Some minor adjustments I made were:
 		<ul>
-			<li>Check the winding number before sampling all the points, and swap vertices as necessary only once.</li>
-			<li>Remove the helper function to eliminate unnecessary memory accesses.</li>
-			<li>Add 0.5 only twice at the start of the loops.</li>
-			<li>Implement incremental triangle traversal.</li>
+			<li>Check the winding number <i>before</i> sampling all the points, swapping vertices only once.</li>
+			<li>Remove helper functions to eliminate unnecessary memory accesses.</li>
+			<li>Add the 0.5 offset only at the start of the loops (twice) rather than within each iteration.</li>
 			<li>Precompute variables like <code>x1 - x0</code> into <code>diff_1</code>, <code>y2 - y1</code> into <code>diff_5</code>, etc., to reduce computations.</li>
 		</ul>
 
