@@ -159,26 +159,25 @@
 		
 		As seen below, bilinear sampling produces a smoother rendition of the image regardless of the sampling rate, with less distinct pixels in the streaks of the parrot. There might be a large difference between the two when the xy-plane is much larger than the uv-plane, in which case nearest neighbour will magnify the pixelation in the uv-plane further into the xy-plane, while bilinear will be relatively smooth. This is because 1 texel is mapping to more than 1 pixel, so sampling more than 1 texel as in the bilinear approach provides a more robust algorithm.
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
+				  <img src="T5 Nearest 1.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
+				  <img src="T5 Nearest 16.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
+				  <img src="T5 Bilinear 1.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
+				  <img src="T5 Bilinear 16.png" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
