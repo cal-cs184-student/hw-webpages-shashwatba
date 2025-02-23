@@ -144,16 +144,21 @@
 		</figure>
 		<h2>Task 4: Barycentric coordinates</h2>
 		Barycentric coordinates are a way to track points with reference to the sides of a polygon (in this class, specifically only to the sides of a triangle). For example, the image below displays a triangle with each of its vertices given a maximum R, G or B value respectively, and all other points in between are colored as per their barycentric coordinates. The higher the alpha value is, the farther the point is to the red vertex, and therefore is less red itself, and similarly for other colors. The sum of alpha, beta and gamma, the three barycentric coordinates, must always be one because the points lie within the triangle, and if any of alpha, beta or gamma are equal to one then we are at the respective vertex (maximum closeness). Also, gamma = 1 - alpha - beta, so we really only need two additional points to compute where our point is.
-
-		<figure>
-			<img src="T4.1.png"/>
-			<figcaption>Triangle with barycentric color gradient</figcaption>
-		</figure>
-
-		<figure>
-			<img src="T4.2.png"/>
-			<figcaption>Color wheel</figcaption>
-		</figure>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="T4.1.png"/>
+				  <figcaption>Triangle with barycentric color gradient</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="T4.2.png"/>
+				  <figcaption>Color wheel</figcaption>
+				</td>
+			  </tr>
+			  
+			</table>
+		</div>
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		<p>Pixel sampling is the process of sampling the texture in the uv-plane into the xy-plane, going through a non-linear map. Since the map is not linear, bilinear mapping requires a weighted average of the four closest points to the uv coordinate, depending on which part of the pixel the uv coordinate is closest to. In the rasterization function, I needed Barycentric coordinates to interpolate the uv coordinates for each pair of xy coordinates, doing so if the points were inside the triangle. Nearest sampling simply rounds the uv-coordinate to the nearest available integer values and samples it.
 		</p><p>
