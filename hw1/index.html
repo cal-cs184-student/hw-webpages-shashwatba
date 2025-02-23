@@ -43,8 +43,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
+		<p>In this project, I wrote code which renders images from .svg files, primarily using triangle rasterization. I also implemented different sampling techniques and evaluated their drawbacks and benefits.</p>
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		<p>For my basic implementation, I used the idea from lecture 2 of looping through the raster grid and checking each pixel’s midpoint, using a function called is_inside_triangle which returns true if the pixel needs to be colored and false if not. To ensure that the entire triangle is within the raster grid, I first computed min_x, min_y, max_x and max_y, which are the x and y edges of the triangle computed using the input vertices. If is_inside_triangle returns true, the rasterize_triangle function colors that pixel. To implement the actual is_inside_triangle function, I ran the line equation tests but was running into the issue of clockwise vertex orderings not returning “true”. To fix this, I used an idea from Discussion 2: flip any two vertices to change the winding order from clockwise to anti-clockwise in the case that (x1 - x0) * (y2 - y1) - (x2 - x1) * (y1 - y0) < 0, indicating a negative z-axis as per the right hand rule.
 		</p><p>
