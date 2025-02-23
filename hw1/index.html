@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Name: Shashwat Bansal</div>
+		<div style="text-align: center;">Shashwat Bansal</div>
 
 		<br>
 
@@ -185,8 +185,13 @@
 		</div>
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Level sampling refers to selecting the appropriate downsampled version of the original image (known as a mipmap) based on how much curvature, minimization or maximization the texture is going through. Amongst the three techniques, pixel sampling is the fastest,
+		
+		To implement level sampling, I computed the differences (in barycentric coordinates) at each point from (x+1, y) and (x, y+1), allowing me to get the derivative terms. These terms keep track of how quickly the color is changing around any given point, and are necessary for the calculations as listed in the spec. While sampling the texture, I ensured that the point stays within the bounds of the mipmap, and then called the relevant function: <code>sample_nearest()</code> or <code>sample_bilinear()</code>. In the <code>L_LINEAR</code> case, I averaged to different calls to these functions, one at <code>floor(level)</code> and one at <code>ceil(level)</code>.
 
+		I used my code from Task 1: Extra credit to see which combinations are fastest, and which are slow. Bilinear pixel interpolation sampling seems to be the fastest way to get a smooth image, mainly because it simply does some averaging operations and doesn't actually increase the number of samples needed. On the other hand, increasing the number of samples per pixel appears the slowest because of how many computations are needed per screen pixel (conversion to barycentric coordinates and constraint checking for each subpixel). Bilinear level interpolation is slower than bilinear pixel interpolation sampling but faster than supersampling 16 subpixels per pixel, since it doesn't require additional samples, but might require some additional mipmap computations such as blending to levels in the case of bilinear level interpolation.
+
+		In terms of memory, supersampling more times per pixel is bound to be the most memory intensive, especially since it uses a larger sample_buffer and then averages it out. This is followed by level sampling, which stores mipmap level information and the texture sample -> screen rasterization, and then finally by pixel sampling which only needs to store the texture sample and rasterization buffer. In terms of quality, supersampling does a great job at producing a good antialias, but the other two methods produce a smooth version of the image that may be more appropriate for certain types of content.
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
