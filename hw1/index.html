@@ -46,10 +46,10 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		For my basic implementation, I used the idea from lecture 2 of looping through the raster grid and checking each pixel’s midpoint, using a function called is_inside_triangle which returns true if the pixel needs to be colored and false if not. To ensure that the entire triangle is within the raster grid, I first computed min_x, min_y, max_x and max_y, which are the x and y edges of the triangle computed using the input vertices. If is_inside_triangle returns true, the rasterize_triangle function colors that pixel. To implement the actual is_inside_triangle function, I ran the line equation tests but was running into the issue of clockwise vertex orderings not returning “true”. To fix this, I used an idea from Discussion 2: flip any two vertices to change the winding order from clockwise to anti-clockwise in the case that (x1 - x0) * (y2 - y1) - (x2 - x1) * (y1 - y0) < 0, indicating a negative z-axis as per the right hand rule.
-		
+		<p>For my basic implementation, I used the idea from lecture 2 of looping through the raster grid and checking each pixel’s midpoint, using a function called is_inside_triangle which returns true if the pixel needs to be colored and false if not. To ensure that the entire triangle is within the raster grid, I first computed min_x, min_y, max_x and max_y, which are the x and y edges of the triangle computed using the input vertices. If is_inside_triangle returns true, the rasterize_triangle function colors that pixel. To implement the actual is_inside_triangle function, I ran the line equation tests but was running into the issue of clockwise vertex orderings not returning “true”. To fix this, I used an idea from Discussion 2: flip any two vertices to change the winding order from clockwise to anti-clockwise in the case that (x1 - x0) * (y2 - y1) - (x2 - x1) * (y1 - y0) < 0, indicating a negative z-axis as per the right hand rule.
+		</p><p>
 		In cases where the triangle covers most of its bounding box (e.g., large triangles), the performance of this approach is comparable to the bounding box method since most pixels need to be processed. However, it is never worse because the overhead of additional checks is minimal compared to the savings in typical scenarios.
-		<figure>
+	</p><figure>
 			<img src="t1.png" alt="test4"/>
 			<figcaption>Task 1</figcaption>
 		</figure>
@@ -111,10 +111,10 @@
 		</ul>
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		I supersampled triangles by changing my implementation in rasterize_triangle to sample at a higher rate, i.e. sample sample_rate times within each pixel. I kept track of these sampled subpixels inside the sample_buffer, which is now larger to account for width * height * sample_rate pixels. I did not call fill_pixel here, instead opting to directly modify the sample_buffer inside the quadruple for loops. For the lines and points, I modified the call to fill_pixel so that it knows how to correctly index into the sample_buffer and fill in entire pixels with the same line/point color, doing so by looping through the subpixels of the pixel in double for loops just like in rasterize_triangle. Lastly, when resolving to framebuffer, I averaged the subpixels of each pixel by looping through them and adding them to a color, then dividing by the sample_rate before putting the color in rgb_framebuffer_target.
-		
+		<p>I supersampled triangles by changing my implementation in rasterize_triangle to sample at a higher rate, i.e. sample sample_rate times within each pixel. I kept track of these sampled subpixels inside the sample_buffer, which is now larger to account for width * height * sample_rate pixels. I did not call fill_pixel here, instead opting to directly modify the sample_buffer inside the quadruple for loops. For the lines and points, I modified the call to fill_pixel so that it knows how to correctly index into the sample_buffer and fill in entire pixels with the same line/point color, doing so by looping through the subpixels of the pixel in double for loops just like in rasterize_triangle. Lastly, when resolving to framebuffer, I averaged the subpixels of each pixel by looping through them and adding them to a color, then dividing by the sample_rate before putting the color in rgb_framebuffer_target.
+		</p><p>
 		Supersampling is useful because it allows for anti-aliasing the image, filtering out “jaggies” such as in the triangle corner seen below. By sampling at a higher frequency than the display has enough pixels for, then averaging those pixels, the overall effect is that the image is smoother and more realistic, since edges are blurred rather than being in staircase like patterns. The main part of the rasterization pipeline that was modified was the resolve_to_framebuffer() function, which needed to accommodate a sample_buffer size that is larger than the framebuffer size.
-
+	</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -155,10 +155,10 @@
 			<figcaption>Color wheel</figcaption>
 		</figure>
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Pixel sampling is the process of sampling the texture in the uv-plane into the xy-plane, going through a non-linear map. Since the map is not linear, bilinear mapping requires a weighted average of the four closest points to the uv coordinate, depending on which part of the pixel the uv coordinate is closest to. In the rasterization function, I needed Barycentric coordinates to interpolate the uv coordinates for each pair of xy coordinates, doing so if the points were inside the triangle. Nearest sampling simply rounds the uv-coordinate to the nearest available integer values and samples it.
-		
+		<p>Pixel sampling is the process of sampling the texture in the uv-plane into the xy-plane, going through a non-linear map. Since the map is not linear, bilinear mapping requires a weighted average of the four closest points to the uv coordinate, depending on which part of the pixel the uv coordinate is closest to. In the rasterization function, I needed Barycentric coordinates to interpolate the uv coordinates for each pair of xy coordinates, doing so if the points were inside the triangle. Nearest sampling simply rounds the uv-coordinate to the nearest available integer values and samples it.
+		</p><p>
 		As seen below, bilinear sampling produces a smoother rendition of the image regardless of the sampling rate, with less distinct pixels in the streaks of the parrot. There might be a large difference between the two when the xy-plane is much larger than the uv-plane, in which case nearest neighbour will magnify the pixelation in the uv-plane further into the xy-plane, while bilinear will be relatively smooth. This is because 1 texel is mapping to more than 1 pixel, so sampling more than 1 texel as in the bilinear approach provides a more robust algorithm.
-
+	</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
