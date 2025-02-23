@@ -141,6 +141,14 @@
 			<img src="swimming.png" alt="Swimming Man" style="width:50%"/>
 			<figcaption>Cube Man Swimming</figcaption>
 		</figure>
+
+		<h2>Task 3: Extra Credit (Rotations)</h2>
+		<p>I implemented a rotate counter-clockwise button ('K') and a rotate clockwise button ('J'), both of which rotate the image by 90 degrees. To do so, I first centered the image to the origin (top-left), multiplied by the rotation matrix, then un-centered it by multiplying it by the inverse of the centering matrix. </p>
+		<figure>
+			<img src="T3EC.png" alt="Swimming Man" style="width:50%"/>
+			<figcaption>Cube Man Waving after being rotated counter-clockwise with 'K'</figcaption>
+		</figure>
+
 		<h2>Task 4: Barycentric coordinates</h2>
 		Barycentric coordinates are a way to track points with reference to the sides of a polygon (in this class, specifically only to the sides of a triangle). For example, the image below displays a triangle with each of its vertices given a maximum R, G or B value respectively, and all other points in between are colored as per their barycentric coordinates. The higher the alpha value is, the farther the point is to the red vertex, and therefore is less red itself, and similarly for other colors. The sum of alpha, beta and gamma, the three barycentric coordinates, must always be one because the points lie within the triangle, and if any of alpha, beta or gamma are equal to one then we are at the respective vertex (maximum closeness). Also, gamma = 1 - alpha - beta, so we really only need two additional points to compute where our point is.
 		<div style="display: flex; flex-direction: column; align-items: center;">
