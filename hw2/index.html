@@ -53,9 +53,9 @@
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		<p>De Casteljau's algorithm is a recursive algorithm that allows us to evaluate a Bezier curve at a point. 
-		The algorithm works by recursively evaluating points somewhere between each pair of control points until we are left with only one point. 
-		This algorithm is used to help draw Bezier curves. To implement it, I simply looped through all neighbouring points and evaluated their weighted average according to \(t\) and \((1-t)\) at each step of the proceses, storing them in a vector2D array of the original length minus one.</p>
+		<p>De Casteljau's algorithm is a recursive algorithm that allows us to construct Bezier curves using their control points. 
+		The algorithm works by recursively evaluating points somewhere between each pair of control points (weighted by parameter \(t\)) until we are left with only one point. 
+		The intermediate points calculated are the control points of the new Bezier curve. To implement it, I simply looped through all neighbouring points and evaluated their weighted average according to \(t\) and \((1-t)\) at each step of the proceses, storing them in a vector2D array of the original length minus one.</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -103,7 +103,7 @@
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
 
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
