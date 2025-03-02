@@ -146,12 +146,14 @@
 			</table>
 		</div>
 
-		<h3>Part 5: Edge split</h3>
+		<h3>Part 5: Edge split (with Extra Credit: boundary splits)</h3>
 		<p>Implementing edge splits was similar to edge flips, except I had to be more careful. I drew out the diagrams before and after the split, and realized that I needed to create two new edges, along with their corresponding half-edges/twins, one vertex, and two new faces. I arbitrarily chose <code>e0</code> to remain as the top-center edge in the diagram, along with some other arbitrary naming decisions. While creating new objects, I initialized them using the <code>new[Name]</code> functions, then calculated their attributes using my diagram. <code>m</code>'s position was the midpoint of <code>b</code> and <code>c</code>'s.
 		</p>
 
 		<p>For debugging, I mostly found staring at my code helpful, and leaving and coming back to it in a while. I tried the check_for functions and noticed that some vertices had 7 half edges pointing to them, while others only had 6. The bug turned out to be coming from me being lazy and not writing down half-edge names on my diagram (and consequently miscalculating <code>h7</code>'s twin to be <code>h7</code>) in one line.</p>
 		
+		<p>For the extra credit, I again drew out the diagram and coded it out. By now, I was confident and only made one error, getting the boundary split to work on the second try. The algorithm was very similar to the normal split case, except we only add one new edge (and corresponding vertex <code>m</code> with half-edges). The key insight was that there were two cases: either <code>e0->halfedge()</code> was the boundary half-edge, or its twin. One of the cases can be collapsed onto the other one without loss of generality by rotating the diagram 180 degrees, and noting which variables need to be swapped (these turn out to be the two boundary vertices along with h0 and h0t). The rest of the implementation was trivial.</p>
+
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -172,6 +174,16 @@
 				<td style="text-align: center;">
 				  <img src="t5.4.png" width="400px"/>
 				  <figcaption>Bean after splits and flips.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t5.5.png" width="400px"/>
+				  <figcaption>Beetle before boundary split.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t5.6.png" width="400px"/>
+				  <figcaption>Beetle after boundary split.</figcaption>
 				</td>
 			  </tr>
 			</table>
