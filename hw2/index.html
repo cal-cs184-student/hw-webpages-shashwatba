@@ -147,8 +147,36 @@
 		</div>
 
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Implementing edge splits was similar to edge flips, except I had to be more careful. I drew out the diagrams before and after the split, and realized that I needed to create two new edges, along with their corresponding half-edges/twins, one vertex, and two new faces. I arbitrarily chose <code>e0</code> to remain as the top-center edge in the diagram, along with some other arbitrary naming decisions. While creating new objects, I initialized them using the <code>new[Name]</code> functions, then calculated their attributes using my diagram. <code>m</code>'s position was the midpoint of <code>b</code> and <code>c</code>'s.
+		</p>
 
+		<p>For debugging, I mostly found staring at my code helpful, and leaving and coming back to it in a while. I tried the check_for functions and noticed that some vertices had 7 half edges pointing to them, while others only had 6. The bug turned out to be coming from me being lazy and not writing down half-edge names on my diagram (and consequently miscalculating <code>h7</code>'s twin to be <code>h7</code>) in one line.</p>
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t5.1.png" width="400px"/>
+				  <figcaption>Teapot before splits.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t5.2.png" width="400px"/>
+				  <figcaption>Teapot after splits.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t5.3.png" width="400px"/>
+				  <figcaption>Bean before splits and flips.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t5.4.png" width="400px"/>
+				  <figcaption>Bean after splits and flips.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
