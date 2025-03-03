@@ -43,7 +43,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		Through this assignment, I learned about Bezier curves and surfaces along with the loop subdivision algorithm, including edge flips and splits. These were very fun to implement, because they involved a lot of computation and visualization planning before implementing the code. I think of myself as a mathematician, and so the learning process allowed me to demonstrate my expertise in the area while also learning something relevant to an area of applied mathematics.
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
@@ -146,11 +146,11 @@
 			</table>
 		</div>
 
-		<h3>Part 5: Edge split (with Extra Credit: boundary splits)</h3>
+		<h3>Part 5: Edge split (with extra credit: boundary splits)</h3>
 		<p>Implementing edge splits was similar to edge flips, except I had to be more careful. I drew out the diagrams before and after the split, and realized that I needed to create two new edges, along with their corresponding half-edges/twins, one vertex, and two new faces. I arbitrarily chose <code>e0</code> to remain as the top-center edge in the diagram, along with some other arbitrary naming decisions. While creating new objects, I initialized them using the <code>new[Name]</code> functions, then calculated their attributes using my diagram. <code>m</code>'s position was the midpoint of <code>b</code> and <code>c</code>'s.
 		</p>
 
-		<p>For debugging, I mostly found staring at my code helpful, and leaving and coming back to it in a while. I tried the check_for functions and noticed that some vertices had 7 half edges pointing to them, while others only had 6. The bug turned out to be coming from me being lazy and not writing down half-edge names on my diagram (and consequently miscalculating <code>h7</code>'s twin to be <code>h7</code>) in one line.</p>
+		<p>For debugging, I mostly found staring at my code helpful, and leaving and coming back to it in a while. I tried the check_for functions and noticed that some vertices had 7 half edges pointing to them, while others only had 6. The bug turned out to be coming from me being lazy and not writing down half-edge names on my diagram (and consequently miscalculating <code>h7</code>'s twin to be <code>h7</code> instead of <code>h7t</code>) in one line.</p>
 		
 		<p>For the extra credit, I again drew out the diagram and coded it out. By now, I was confident and only made one error, getting the boundary split to work on the second try. The algorithm was very similar to the normal split case, except we only add one new edge (and corresponding vertex <code>m</code> with half-edges). The key insight was that there were two cases: either <code>e0->halfedge()</code> was the boundary half-edge, or its twin. One of the cases can be collapsed onto the other one without loss of generality by rotating the diagram 180 degrees, and noting which variables need to be swapped (these turn out to be the two boundary vertices along with h0 and h0t). The rest of the implementation was trivial.</p>
 
@@ -189,22 +189,72 @@
 			</table>
 		</div>
 		
-		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<h3>Part 6: Loop subdivision for mesh upsampling (with extra credit: boundaries and additional schemes)</h3>
+		<p>To implement loop subdivision, I followed the recommended "reverse" order listed in the spec, since coarser meshes are easier to navigate. I first computed the <code>newPosition</code>s of the original vertices, along with the positions of the new midpoint vertices, storing the latter in the edge's <code>newPosition</code>. Then, I split only the original edges by iterating through a previously-cached <code>vector<EdgeIter></code> array and updating the new vertices' position. Lastly, I flipped all edges where the two connected vertices have different <code>isNew</code> values, and updated the previously computed vector <code>newPosition</code>s.</EdgeIter></code></p>
+
+		<p>Due to the averaging nature of upsampling, bumps and uneven/jagged regions are mitigated after applying it. Bevels are smoothened out as well.</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t6.1.png" width="400px"/>
+				  <figcaption>weird.dae before 5 iterations of loop subdivision.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t6.2.png" width="400px"/>
+				  <figcaption>weird.dae after 5 iterations of loop subdivision.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Sharp corners and edges become extremely smooth after repeated subdivision loops because of how vertex positions are averaged on each iteration. To avoid this, we can split the edges neighboring a corner vertex preemptively, resulting in a protruding corner after the loop subdivision instead of a well-rounded region.</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t6.3.png" width="400px"/>
+				  <figcaption>cube.dae.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t6.4.png" width="400px"/>
+				  <figcaption>cube.dae after 7 iterations of loop subdivision.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t6.5.png" width="400px"/>
+				  <figcaption>cube.dae with splits near an edge.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t6.6.png" width="400px"/>
+				  <figcaption>cube.dae with splits after 5 iterations of loop subdivision.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Yes, it is possible to make cube.dae symmetric after loop subdivisions using splits and a few flips. This produces something closer to a cube with rounded edges, which is symmetric because increasing the number of vertices and edges allowed for more uniforly distributed loop subdivisions, whereas having only a few objects to run the algorithm on leads to more subdivisions in certain areas, leaving behind protrusions where the initial edges were.</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="t6.7.png" width="400px"/>
+				  <figcaption>preprocessed cube.dae.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="t6.8.png" width="400px"/>
+				  <figcaption>preprocessed cube.dae after 7 iterations of loop subdivision.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
