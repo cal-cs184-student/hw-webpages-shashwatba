@@ -209,7 +209,7 @@
 			</table>
 		</div>
 
-		<p>Sharp corners and edges become extremely smooth after repeated subdivision loops because of how vertex positions are averaged on each iteration. To avoid this, we can split the edges neighboring a corner vertex preemptively, resulting in a protruding corner after the loop subdivision instead of a well-rounded region.</p>
+		<p>Sharp corners and edges become extremely smooth and distant from their original positions after repeated subdivision loops because of how vertex positions are averaged on each iteration, and the corner vertices are the only vertices, far apart from each other. To avoid this, we can split the edges neighboring a corner vertex preemptively, resulting in a protruding corner after the loop subdivision instead of a well-rounded region.</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -230,7 +230,7 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="t6.6.png" width="400px"/>
-				  <figcaption>cube.dae with splits after 5 iterations of loop subdivision.</figcaption>
+				  <figcaption>cube.dae with splits after 7 iterations of loop subdivision, from the side.</figcaption>
 				</td>
 			  </tr>
 			</table>
