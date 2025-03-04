@@ -270,6 +270,43 @@
 			</table>
 		</div>
 
+		<p>For more extra credit, I implemented the modified butterfly scheme using the method in the paper listed on the spec. Only steps one and two required modification. For step one, I simply assigned each original edge it's original weight, since in this algorithm we are only modifying the positions of new edges.</p>
+		
+		<p>Step two was more involved. Firstly, for boundary edges, I used a pattern of iterating through the two halfedge's <code>->twin()->next()</code> until I found their neighbouring boundary vertices, for a total of four boundary vertices. Then I weighted as per the paper. For the double ordinary case, I resorted, yet again, to drawing out the diagram to navigate halfedges until I have assigned all 10 vertices neighbouring our two. Then, I assigned weights.</p>
+
+		<p>For the one ordinary, one extraordinary case, I assigned labels \(q\) and \(s0\) as per the diagram, where \(q\) is the vertex with a valence not equal to six. This vertex gets weight \(\frac{3}{4}\) in the final position of the midpoint. The other vertices, starting from <code>s0</code>, and again, navigating in a <code>->next()->twin()->next()</code> pattern, get weights as per the guidelines. The cases of valence three and four required special attention (hardcoding the values that didn't follow the cosine pattern).</p>
+
+		<p>Lastly, the case of double extraordinary was similar to the one ordinary, one extraordinary case, except we don't have an ordinary vertex anymore and so need to treat both as extraordinary. Choosing \(q\) and \(s0\) is initially arbitrary, and we must repeat the proceess again after swapping them. A mistake I made was not accounting for the three-fourth weight assigned to each vertex (\(q\) or \(s0\)) in addition to the one-fourth coming from the \(s_i\)s. Then I averaged the two.</p>
+
+		<p>The rest of the process remained exactly the same. We split each old edge at it's midpoint, and assign it it's newly calculated position. We flip edges which connect old vertices to new ones. Getting to this point in the writeup made me realize that Step 5, updating vertex positions again, is unnecessary, eliminating the <i>last</i> bug I had with some protruding vertices. We already updated the positions of the new vertices in step 3, and do not intend to update old ones.</p>
+
+		<p>Here are some results of the modified Butterfly algorithm. Note that boundary edges mesh really well, and don't have folds or gaps.</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="butt1.png" width="400px"/>
+				  <figcaption>Preprocessed cube.dae.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="butt2.png" width="400px"/>
+				  <figcaption>cube.dae after 1 round of modifed butterfly subdivisions.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="butt3.png" width="400px"/>
+				  <figcaption>cube.dae after 2 rounds of modifed butterfly subdivsions.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="butt4.png" width="400px"/>
+				  <figcaption>cube.dae after several rounds of modifed butterfly subdivsions.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
 		<h2>Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 		<p>I created a clam by extruding a circle with 24 edges, subdividing it using Catmull-Clark (Blender's version of it), plotting a Bezier curve and then mapping the cylinder through that. I also threw in a 360 degree rotation somewhere in there before mapping it to the Bezier curve, leading to a denser mesh. I was initially trying to model a candy cane using my Bezier curve, but that model could not survive conversion to a .dae file.</p>
 	
