@@ -189,7 +189,7 @@
 			</table>
 		</div>
 		
-		<h3>Part 6: Loop subdivision for mesh upsampling (with extra credit: meshes with boundaries and additional subdivision schemes)</h3>
+		<h3>Part 6: Loop subdivision for mesh upsampling (with extra credit: meshes with boundaries and the modified butterfly scheme)</h3>
 		<p>To implement loop subdivision, I followed the recommended "reverse" order listed in the spec, since coarser meshes are easier to navigate. I first computed the <code>newPosition</code>s of the original vertices, along with the positions of the new midpoint vertices, storing the latter in the edge's <code>newPosition</code>. Then, I split only the original edges by iterating through a previously-cached <code>vector<EdgeIter></code> array and updating the new vertices' position. Lastly, I flipped all edges where the two connected vertices have different <code>isNew</code> values, and updated the previously computed vector <code>newPosition</code>s</EdgeIter></code>. In the process of implementation, I also wrote a <code>computeCentroid()</code> function even though the comments said I don't need to do this.</p>
 
 		<p>Due to the averaging nature of upsampling, bumps and uneven/jagged regions are mitigated after applying it. Bevels are smoothened out as well.</p>
@@ -280,7 +280,7 @@
 
 		<p>The rest of the process remained exactly the same. We split each old edge at it's midpoint, and assign it it's newly calculated position. We flip edges which connect old vertices to new ones. Lastly, we update vertex positions using the new computed ones.</p>
 
-		<p>Here are some results of the modified Butterfly algorithm. I used <code>w = 0.0.0000001f</code> so that it is sufficiently small but not zero.</p>
+		<p>Here are some results of the modified Butterfly algorithm. I used <code>w = 0.0.0000001f</code> so that it is sufficiently small but not zero. The modified butterfly scheme results in more irregular meshes than the loop subdivisions scheme, perhaps because of how it handles vertices very differently based on their degree. The algorithm notably looses smoothness, resulting in more irregular, perhaps more realistic, meshes.</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
