@@ -252,18 +252,28 @@
 			</table>
 		</div>
 
-		<p>For extra credit, I handled supporting meshes with boundaries by making modifications to my handling of boundary vertices and edges. For each boundary vertex, I computed the new position as \( \frac{3}{4}v + \frac{1}{8}(v_1+v_2)\), where \(v1\) and \(v2\) are the neighboring boundary vertices. Next, when splitting a boundary edge, I chose the new vertex to be the midpoint of the two endpoints of <code>v</code>. Lastly, I made sure I never flip boundary edges in the final step. The paper linked on the spec linked to another paper [BLZ00] which had these formulae.</p>
+		<p>For extra credit, I handled supporting meshes with boundaries by making modifications to my handling of boundary vertices and edges in steps one and two. For each old boundary vertex, I computed the new position as \( \frac{3}{4}v + \frac{1}{8}(v_1+v_2)\), where \(v1\) and \(v2\) are the neighboring boundary vertices. Next, when splitting a boundary edge, I chose the new vertex to have a position that is the weighted average of its neighbors. Lastly, I made sure I never flip boundary edges in the fourth step. The paper linked on the spec linked to another paper [BLZ00] which had these formulae.</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="t6ec.1.png" width="400px"/>
+				  <img src="bound.png" width="400px"/>
 				  <figcaption>beetle.dae before loop subdivisions.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="t6ec.2.png" width="400px"/>
+				  <img src="bound2.png" width="400px"/>
 				  <figcaption>beetle.dae after 1 round of loop subdivisions.</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bound3.png" width="400px"/>
+				  <figcaption>beetle.dae after 2 rounds of loop subdivisions.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bound4.png" width="400px"/>
+				  <figcaption>beetle.dae after 4 rounds of loop subdivisions.</figcaption>
 				</td>
 			  </tr>
 			</table>
