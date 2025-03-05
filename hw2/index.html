@@ -98,8 +98,7 @@
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
 		
-		<p>De Casteljau's algorithm extends to Bezier surfaces by first applying it to the rows of the control points. Each row produces a single final points, which is then used
-			as the control points for a new Bezier curve. The algorithm is then applied to these remaining control points to produce a singular final point.
+		<p>De Casteljau's algorithm extends naturally to Bézier surfaces by first applying it to each row of control points. This process reduces each row to a single point, which then serves as the control points for a new Bézier curve. The algorithm is subsequently applied to these remaining points to determine a final singular point.
 		To implement this, the core <code>evaluateStep()</code> function was really similar to part one. I then wrote the code to call <code>evaluateStep()</code> repeatedly until 
 	the size of the input points was one. Lastly, I wrote an algorithm to first evaluate the control points row-by-row, with <code>u</code> as the input parameter, and then evaluate the resulting points a single time with parameter <code>v</code>.</p>
 		<figure>
@@ -110,7 +109,7 @@
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		<p></p>To implement area-weighted vertex normals, I iterated through all the halfedges at the current vertex (until I looped around). Then, I computed the 3 verte positions corresponding to the  face of the half-edge, and cross-producted their two differences. Then I added to the running sum return value the <code>norm()</code> of this cross times 0.5 times the norm.  Lastly, I called <code>.unit()</code> to normalize the return vector.</p>
+		<p>To implement area-weighted vertex normals, I iterated through all the half-edges connected to the current vertex until completing a full loop. For each half-edge, I retrieved the three vertex positions defining its associated face and computed the cross product of two edge vectors. I then accumulated the result by adding half the norm of this cross product to the running sum. Finally, I normalized the accumulated vector using <code>.unit()</code> to obtain the final vertex normal.</p>
 		
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
