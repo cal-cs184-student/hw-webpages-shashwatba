@@ -109,7 +109,7 @@
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		<p>To implement area-weighted vertex normals, I iterated through all the half-edges connected to the current vertex until completing a full loop. For each half-edge, I retrieved the three vertex positions defining its associated face and computed the cross product of two edge vectors. I then accumulated the result by adding half the norm of this cross product to the running sum. Finally, I normalized the accumulated vector using <code>.unit()</code> to obtain the final vertex normal.</p>
+		<p>To implement area-weighted vertex normals, I iterated through all the half-edges connected to the current vertex until completing a full loop. For each half-edge, I retrieved the three vertex positions defining its associated face and computed the cross product of two edge vectors. This is useful because the magnitude of the vector produced by the cross-product between two vectors is double the area of the corresponding face. I then accumulated the result by adding half the norm of this cross product to the running sum. Finally, I normalized the accumulated vector using <code>.unit()</code> to obtain the final vertex normal.</p>
 		
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
