@@ -288,7 +288,7 @@
 
 		<p>The rest of the process remained exactly the same. We split each old edge at its midpoint, and assign it its newly calculated position. We flip edges which connect old vertices to new ones. Lastly, we update vertex positions using the new computed ones.</p>
 
-		<p>Here are some results of the modified Butterfly algorithm. I used <code>w = 0.0.0000001f</code> so that it is sufficiently small but not zero. The modified butterfly scheme results in more irregular meshes than the loop subdivisions scheme, perhaps because of how it handles vertices very differently based on their degree. The algorithm notably loses smoothness, resulting in more irregular, perhaps more realistic, meshes.</p>
+		<p>Here are some results of the modified Butterfly algorithm. I used <code>w = 0.0.0000001f</code> throuughout to maintain consistency. The modified butterfly scheme results in more irregular meshes than the loop subdivisions scheme, perhaps because of how it handles vertices very differently based on their degree. The algorithm notably loses some smoothness, but is able to capture objects like cubes much better because it doesn't modify the position of the original vertices.</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
