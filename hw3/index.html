@@ -53,7 +53,7 @@
 		<p>My implementation of ray-triangle intersections was the same as the Möller-Trumbore algorithm in the slides. I calculated edges <code>e1</code> and <code>e2</code>, crossproducts <code>s1</code> and <code>s2</code> and the difference of the ray origin and triangle vertex <code>s</code>. Then I calculated the (t, b1, b2) vector, which required me to make sure that all values were within [0, 1]. Lastly, in the <code>intersect()</code> function only, I also updated the <code>t, primitive, bsdf and n</code> variables of the <code>isect</code> of the triangle. To calculate <code>n</code>, I dot-producted the normal vector of the triangle with (b1, b2, 1 - b1 - b2).</p>
 		<p>For the ray-sphere intersection, I followed the quadratic equation intersection method in the lecture slides. I had to make a few additional checks to ensure that the discriminant was non-negative and that the t values were within the bounds of the sphere. I also had to calculate the normal vector of the sphere at the intersection point in <code>isect</code> by subtracting the center of the sphere from the intersection point and normalizing it.</p>
 		<figure>
-			<img src="CBSpheres.png"/>
+			<img src="t1.1.png"/>
 			<figcaption>Spheres</figcaption>
 		</figure>
 
