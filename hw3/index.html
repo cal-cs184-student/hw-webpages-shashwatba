@@ -161,8 +161,9 @@
 		<p>Overall, importance sampling significantly outperforms uniform hemisphere sampling in terms of visual quality and efficiency. Hemisphere sampling sends rays in arbitrary directions, which results in many ineffective samples and leads to high-frequency noise, particularly in scenes with small or occluded light sources. Importance sampling addresses this by directing rays toward known light sources, ensuring most samples are productive. This results in brighter, smoother images with accurate soft shadows, even with fewer samples. The improvement is most notable in less well-lit areas like wall corners where uniform sampling fails to capture the darkness appropriately.</p>
 		<h2>Part 4: Global Illumination</h2>
 		<p>In contrast to direct lighting, indirect illumination comes from the light bouncing between non-emitting surfaces in the scene. I implemented global illumination using recursive ray tracing in the <code>at_least_one_bounce_radiance()</code> function. I started by computing the local coordinate frame at the intersection point and transforming the outgoing ray direction into local space. Then, I computed the one-bounce radiance, essentially the direct lighting at that point, either if it was the first bounce or if we were set to accumulate bounces. This ensured that at least the primary surface hit by the camera would receive lighting directly from the light sources.</p>
-		<p>To simulate further bounces, I used BSDF sampling to generate a new ray direction and spawn a secondary ray from the hit point. I applied Russian roulette with a 35% termination probability to avoid infinite recursion and improve performance, while still keeping the estimator unbiased. If the new ray intersected another object, I recursively called the same function to calculate its radiance contribution. I then scaled the returned value by the BSDF, cosine term, and PDF (similar to the previous part), adjusting for the Russian roulette probability with continuation probability\( q = 1 - p \) as the denominator in the case the algorithm continues.</p>
-			<div style="display: flex; flex-direction: column; align-items: center;">
+		<p>To simulate further bounces, I used BSDF sampling to generate a new ray direction and spawn a secondary ray from the hit point. I applied Russian roulette with a 35% termination probability to avoid infinite recursion and improve performance, while still keeping the estimator unbiased. If the new ray intersected another object, I recursively called the same function to calculate its radiance contribution. I then scaled the returned value by the BSDF, cosine term, and PDF (similar to the previous part), adjusting for the Russian roulette probability with continuation probability \( q = 1 - p \) as the denominator in the case the algorithm continues.</p>
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 					<tr>
 						<td style="text-align: center;">
@@ -171,7 +172,7 @@
 						</td>
 						<td style="text-align: center;">
 						  <img src="t4.2.png" width="400px"/>
-						  <figcaption>Wall-E with Global Illumination</figcaption>
+						  <figcaption>Dragon with Global Illumination</figcaption>
 						</td>
 					  </tr>
 					  <tr>
@@ -186,6 +187,7 @@
 					  </tr>
 				</table>
 			</div>
+			<p>As evident, the bunny with indirect illumination is a lot less well lit than the direct illumination bunny, because it only captures light that has bounced off other surfaces, not the direct light coming straight from the light source. The Global bunny is the brightest of them all, as expected.</p>
 			<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 				  <tr>
@@ -197,10 +199,6 @@
 					  <img src="b.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 0 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="c.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 0 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				  <tr>
 					<td style="text-align: center;">
@@ -211,10 +209,6 @@
 					  <img src="e.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 1 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="f.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 1 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				  <tr>
 					<td style="text-align: center;">
@@ -225,10 +219,6 @@
 					  <img src="h.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 2 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="i.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 2 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				  <tr>
 					<td style="text-align: center;">
@@ -239,10 +229,6 @@
 					  <img src="k.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 3 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="l.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 3 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				  <tr>
 					<td style="text-align: center;">
@@ -253,10 +239,6 @@
 					  <img src="n.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 4 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="o.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 4 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				  <tr>
 					<td style="text-align: center;">
@@ -267,13 +249,42 @@
 					  <img src="q.png" width="400px"/>
 					  <figcaption>Bunny: With Accumulation, 5 max-ray-depth</figcaption>
 					</td>
-					<td style="text-align: center;">
-						<img src="r.png" width="400px"/>
-						<figcaption>Bunny: With Accumulation and Russian Roulette, 100 max-ray-depth</figcaption>
-					  </td>
 				  </tr>
 				</table>
 			</div>
+
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					<tr>
+						<td style="text-align: center;">
+							<img src="c.png" width="400px"/>
+							<figcaption>Bunny: With Accumulation and Russian Roulette, 0 max-ray-depth</figcaption>
+						  </td>
+						  <td style="text-align: center;">
+							<img src="f.png" width="400px"/>
+							<figcaption>Bunny: With Accumulation and Russian Roulette, 1 max-ray-depth</figcaption>
+						  </td>
+					  </tr>
+					  <tr>
+						<td style="text-align: center;">
+							<img src="i.png" width="400px"/>
+							<figcaption>Bunny: With Accumulation and Russian Roulette, 2 max-ray-depth</figcaption>
+						  </td>
+						  <td style="text-align: center;">
+							<img src="l.png" width="400px"/>
+							<figcaption>Bunny: With Accumulation and Russian Roulette, 3 max-ray-depth</figcaption>
+						  </td>
+					  </tr>
+					 <tr><td style="text-align: center;">
+						<img src="o.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 4 max-ray-depth</figcaption>
+					  </td><td style="text-align: center;">
+						<img src="r.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 100 max-ray-depth</figcaption>
+					  </td></tr>
+				</table>
+			</div>
+			
 			<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 					<tr>
