@@ -252,8 +252,10 @@
 				  </tr>
 				</table>
 			</div>
-
-			<div style="display: flex; flex-direction: column; align-items: center;">
+			<p>In the non-accumulated renders of <code>CBbunny.dae</code>, I was able to observe the isolated contributions of each individual bounce of light. At the second bounce, I noticed subtle illumination on areas of the bunny that were previously in shadow—such as underneath the chin or between the legs. This illumination came from light that first hit the floor or walls and then bounced onto the bunny. Since the first bounce only includes direct light, these areas would remain completely dark without the second bounce. At the third bounce, I started to see a faint but recognizable glow throughout the scene. Although the scene was dim overall, it captured a more diffuse and ambient light feel. This bounce contributed to a softening of shadows and a slight increase in uniform brightness, helping to fill in darker areas with a more natural lighting gradient.</p>
+			<p>When I enabled bounce accumulation, the visual results improved significantly with each added bounce. At zero bounces, the render only displayed emissive surfaces, since no light had yet reflected onto the scene. At one bounce, I began to see the bunny and walls where they were directly lit by the light source, but the shadows were extremely dark and lacked any softness. By the second bounce, I noticed a clear improvement in shadow softness and subtle illumination in areas not directly hit by the light. Interestingly, I also began to see color bleeding—such as the red or green tint of the walls subtly reflecting onto the bunny's surface. At three or more bounces, the scene grew brighter, and more fine details became visible, such as the contours of the bunny’s fur and body. However, beyond the third or fourth bounce, the improvements became more subtle, mostly affecting global brightness and fine surface detail.</p>
+			<p>To evaluate the effect of Russian Roulette termination, I rendered the scene with <code>max_ray_depth set to various values, including 100, and used a termination probability of 0.35. Visually, I found that the results were very similar to those rendered with full ray depth and no Russian Roulette. The overall lighting and shading quality remained intact. Only upon close inspection—especially in the darkest or most softly lit regions—did I notice a slight increase in noise in the Russian Roulette version. Despite that, the benefits in rendering efficiency were clear. Russian Roulette allowed me to simulate deep ray paths without a significant performance hit, while still producing nearly identical lighting effects.</p>
+				<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 					<tr>
 						<td style="text-align: center;">
@@ -284,7 +286,7 @@
 					  </td></tr>
 				</table>
 			</div>
-			
+			<p>For the renderings of Banana with exponentially increasing samples per pixel, higher levels of samples-per-pixel produce less noisy images, as evident below.</p>
 			<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 					<tr>
