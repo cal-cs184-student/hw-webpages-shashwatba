@@ -106,9 +106,9 @@
 			</div>
 		<p>Rendering times were significantly for these images than without the BVH implementation. For example, Lucy took 1.3 seconds with BVH and 1510.2 seconds without BVH. Dragon took 1.0 seconds with BVH and 1258.9 without. This means the average speedup was around 1335x, wherein the creation time of the BVH is logarithmic alongside the time to traverse it. By avoiding checking unnecessary nodes not in the BVH tree, we save enough time to go from O(n) to O(log(n)) time complexity.</p>
 		<h2>Part 3: Direct Illumination</h2>
-		<p>I first implemented the <code>f()</code> function in <code>bsdf.cpp</code> where I simply returned <code>reflectance/pi</code> since our algorithm doesn't depend on the input vectors. Next, in <code>zero_bounce_radiance()</code>, I called the bsdf's <code>get_emission()</code> function.</p>
+		<p>I first implemented the <code>f()</code> function in <code>bsdf.cpp</code> where I simply returned <code>reflectance/(2*pi)</code> since our algorithm doesn't depend on the input vectors. Next, in <code>zero_bounce_radiance()</code>, I called the bsdf's <code>get_emission()</code> function.</p>
 		<p>For hemisphere lighting, I repeatedly sampled from the bsdf using <code>sample_f()</code> <code>num_samples</code> times. I then account for Lambert's cosine law and compute the cosine theta term between the sample direction and the surface normal (0, 0, 1). Next, I transform the sample into world space coordinates by multiplying with <code>o2w</code>. I keep track of the shadow ray generated in that direction from the surface point. Then, I check for any intersection between the shadow ray and a surface using <code>bvh->intersect</code> and add it as a running sum to <code>L_out</code>, where the light is computed as \( \frac{L * f * cos\theta}{pdf} \). Lastly, we divide by <code>num_samples</code> to produce an average of the samples and return it.</p>
-		<p>For importance sampling, the key was realizing that I only need to sample directions which have light sources in them. This time, I perform <code>ns_area_light</code> samples instead for each light in the scene and calling <code>sample_L</code> to sample. Again, I computed the shadow ray from the light source, but made sure to cap it at the distance from the source, or it will overshoot. I then similarly checked for intersection with the BVH, updating the running sum with the same formula. Another thing I did was that I skipped values corresponding to non-positive thetas, as those would be light sources in the wrong direction. Lastly, I averaged the samples as before</p>
+		<p>For importance sampling, the key was realizing that I only need to sample directions which have light sources in them. This time, I perform <code>ns_area_light</code> samples instead for each light in the scene and calling <code>sample_L</code> to sample. Again, I computed the shadow ray from the light source, but made sure to cap it at the distance from the source, or it will overshoot. I then similarly checked for intersection with the BVH, updating the running sum with the same formula. Another thing I did was that I skipped values corresponding to non-positive thetas, as those would be light sources in the wrong direction. Lastly, I averaged the samples as before.</p>
 		
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -143,41 +143,80 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="t3.22.png" width="400px"/>
-				  <figcaption>Importance Lighting: 1 light ray</figcaption>
+				  <figcaption>Importance Lighting: 4 light ray</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="t3.23.png" width="400px"/>
-				  <figcaption>Importance Lighting: 1 light ray</figcaption>
+				  <figcaption>Importance Lighting: 8 light ray</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="t3.24.png" width="400px"/>
-				  <figcaption>Importance Lighting: 1 light ray</figcaption>
+				  <figcaption>Importance Lighting: 16 light ray</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 		<p>Overall, importance sampling significantly outperforms uniform hemisphere sampling in terms of visual quality and efficiency. Hemisphere sampling sends rays in arbitrary directions, which results in many ineffective samples and leads to high-frequency noise, particularly in scenes with small or occluded light sources. Importance sampling addresses this by directing rays toward known light sources, ensuring most samples are productive. This results in brighter, smoother images with accurate soft shadows, even with fewer samples. The improvement is most notable in less well-lit areas like wall corners where uniform sampling fails to capture the darkness appropriately.</p>
 		<h2>Part 4: Global Illumination</h2>
-		<p>>
+		<p>In contrast to direct lighting, indirect illumination comes from the light bouncing between non-emitting surfaces in the scene.
+
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="t4.1.png" width="400px"/>
+					  <figcaption>Bunny with Global Illumination</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="t4.2.png" width="400px"/>
+					  <figcaption>Wall-E with Global Illumination</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="t4.3.png" width="400px"/>
+					  <figcaption>Bunny with Direct Illumination Only</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="t4.4.png" width="400px"/>
+					  <figcaption>Bunny with Indirect Illumination Only</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="a.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 0 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="b.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 0 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="c.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 0 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="d.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 1 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="e.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 1 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="f.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 1 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				</table>
+			</div>
 		
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
-		</div>
+	</div>
 	</body>
 </html>
