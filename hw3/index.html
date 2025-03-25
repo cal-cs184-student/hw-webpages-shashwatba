@@ -78,8 +78,33 @@
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		<p>For the BVH construction, I first initialized a <code>BVHNode</code> to be the entire bounding box. Then, if <code>max_leaf_size</code> is less than the number of primitives in the bbox, I make it a leaf node. Otherwise if the node contains more primitives than allowed in a leaf, the algorithm chooses a splitting axis based on the extent of the centroid bounding box.  It selects the axis along which the centroids vary the most, then partitions the primitives using the midpoint of the centroids along that axis. This is done using <code>std::partition</code>, which rearranges the primitives such that those with centroids less than the midpoint go to the left and the rest go to the right. If partitioning fails to split (e.g., all centroids fall on one side), it defaults to a balanced split. Finally, the algorithm recursively constructs the left and right child nodes, resulting in a binary BVH tree optimized for spatial queries./p>
+		
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="t2.1.png" width="400px"/>
+					  <figcaption>Max Planck</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="t2.2.png" width="400px"/>
+					  <figcaption>Lucy</figcaption>
+					</td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="t2.3.png" width="400px"/>
+					  <figcaption>Dragon</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="t2.4.png" width="400px"/>
+					  <figcaption>Blob</figcaption>
+					</td>
+				  </tr>
+				</table>
+			</div>
+		<p>Rendering times were significantly for these images than without the BVH implementation. For example, Lucy took 1.3 seconds with BVH and 1510.2 seconds without BVH. Dragon took 1.0 seconds with BVH and 1258.9 without. This means the average speedup was around 1335x, wherein the creation time of the BVH is only constant wheras the time to traverse the BVH is logarithmic. By avoiding checking unnecessary nodes not in the BVH tree, we save enough time to go from O(n) to O(log(n)) time complexity.</p>
 		<h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
