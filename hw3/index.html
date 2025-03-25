@@ -40,7 +40,7 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this homework, I implemented a physically-based path tracer from scratch, including features like ray-scene intersection, BVH acceleration, direct and global illumination, and adaptive sampling. Through this, I gained a deeper understanding of techniques like Monte Carlo integration and how realistic lighting can be simulated through recursive ray tracing.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		<p>To generate camera rays, I looked at the diagram and thought about the transformations that (x, y) goes under (luckily, I didn't need to draw a diagram). Since x and y are in betweeen 0 and 1 initially, we can subtract 0.5 from both of them and multiply by 2 to have them be in the range [-1, 1] instead. Then we can scale them with the width and height of the camera space as per the boundary vertex values in the diagram. Lastly, we multiply by cWd on the left to transform to world coordinates and normalize by dividing with the norm and also set <code>min_t</code> and <code>max_t</code> as indicated in the spec.</p>
