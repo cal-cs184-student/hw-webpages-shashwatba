@@ -322,7 +322,8 @@
 			</div>
 		
 		<h2>Part 5: Adaptive Sampling</h2>
-		<p></p>
+		<p>adaptive sampling is a technique used to dynamically determine how many rays (or samples) are needed per pixel, based on the variance in color values of the samples collected so far. Instead of using a fixed number of samples for every pixel, adaptive sampling stops early when the estimated pixel color has converged—that is, when additional samples are unlikely to significantly change the result. This allows the renderer to save computation time by allocating more samples only where they’re needed.</p>
+		<p>In my implementation, for each pixel, I generate a ray within the pixel using <code>gridSampler->get_sample()</code>, then trace it through the scene using <code>est_radiance_global_illumination</code>. I accumulate the returned radiance in rvl to compute the average color, while also updating s and s2, which store the sum and sum of squares of the radiance's illuminance. To enable adaptive sampling, I evaluate convergence every <code>samplesPerBatch</code> samples. At each checkpoint, I calculate the mean, variance, and the confidence interval using the 95% confidence level multiplier (1.96²). If this confidence interval is smaller than a threshold based on the mean squared illuminance, I conclude that the sample variance is low enough and stop taking more samples for that pixel. This means the color is stable and doesn't require further refinement. Finally, I average the collected radiance values and write the result to the framebuffer.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
