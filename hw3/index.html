@@ -108,28 +108,28 @@
 		<h2>Part 3: Direct Illumination</h2>
 		<p>I first implemented the <code>f()</code> function in <code>bsdf.cpp</code> where I simply returned <code>reflectance/pi</code> since our algorithm doesn't depend on the input vectors. Next, in <code>zero_bounce_radiance()</code>, I called the bsdf's <code>get_emission()</code> function.</p>
 		<p>For hemisphere lighting, I repeatedly sampled from the bsdf using <code>sample_f()</code> <code>num_samples</code> times. I then account for Lambert's cosine law and compute the cosine theta term between the sample direction and the surface normal (0, 0, 1). Next, I transform the sample into world space coordinates by multiplying with <code>o2w</code>. I keep track of the shadow ray generated in that direction from the surface point. Then, I check for any intersection between the shadow ray and a surface using <code>bvh->intersect</code> and add it as a running sum to <code>L_out</code>, where the light is computed as \( \frac{L * f * cos\theta}{pdf} \). Lastly, we divide by <code>num_samples</code> to produce an average of the samples and return it.</p>
-		<p>For importance sampling, the key was realizing that I only need to sample directions which have light sources in them. This time, I perform <code>ns_area_light</code> samples instead for each light in the scene and calling <code>sample_L</code> to sample. Again, I computed the shadow ray from the light source, but made sure to cap it at the distance from the source, or it will overshoot. I then similarly checked for intersection with the BVH, updating the running sum with the same formula. Another thing I did was that I skipped values corresponding to non-positive thetas, as those would be light sources in the wrong direction.</p>
+		<p>For importance sampling, the key was realizing that I only need to sample directions which have light sources in them. This time, I perform <code>ns_area_light</code> samples instead for each light in the scene and calling <code>sample_L</code> to sample. Again, I computed the shadow ray from the light source, but made sure to cap it at the distance from the source, or it will overshoot. I then similarly checked for intersection with the BVH, updating the running sum with the same formula. Another thing I did was that I skipped values corresponding to non-positive thetas, as those would be light sources in the wrong direction. Lastly, I averaged the samples as before</p>
 		
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="t3.1.png" width="400px"/>
-				  <figcaption>Hemisphere Lighting: Bunny with 16 samples per pixel, 8 samples per light.</figcaption>
+				  <figcaption>Hemisphere Lighting: Bunny with 16 samples per pixel</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="t3.2.png" width="400px"/>
-				  <figcaption>Hemisphere Lighting: Bunny with 64 samples per pixel, 32 samples per light.</figcaption>
+				  <figcaption>Hemisphere Lighting: Bunny with 64 samples per pixel</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="t3.3.png" width="400px"/>
-				  <figcaption>Importance Lighting: Bunny with 16 samples, per pixel, 8 samples per light</figcaption>
+				  <figcaption>Importance Lighting: Bunny with 16 samples per pixel</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="t3.4.png" width="400px"/>
-				  <figcaption>Importance Lighting: Bunny with 64 samples, per pixel, 32 samples per light</figcaption>
+				  <figcaption>Importance Lighting: Bunny with 64 samples per pixel</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -160,8 +160,8 @@
 		</div>
 		<p>Overall, importance sampling significantly outperforms uniform hemisphere sampling in terms of visual quality and efficiency. Hemisphere sampling sends rays in arbitrary directions, which results in many ineffective samples and leads to high-frequency noise, particularly in scenes with small or occluded light sources. Importance sampling addresses this by directing rays toward known light sources, ensuring most samples are productive. This results in brighter, smoother images with accurate soft shadows, even with fewer samples. The improvement is most notable in less well-lit areas like wall corners where uniform sampling fails to capture the darkness appropriately.</p>
 		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		<p>>
+		
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
