@@ -161,29 +161,32 @@
 		<p>Overall, importance sampling significantly outperforms uniform hemisphere sampling in terms of visual quality and efficiency. Hemisphere sampling sends rays in arbitrary directions, which results in many ineffective samples and leads to high-frequency noise, particularly in scenes with small or occluded light sources. Importance sampling addresses this by directing rays toward known light sources, ensuring most samples are productive. This results in brighter, smoother images with accurate soft shadows, even with fewer samples. The improvement is most notable in less well-lit areas like wall corners where uniform sampling fails to capture the darkness appropriately.</p>
 		<h2>Part 4: Global Illumination</h2>
 		<p>In contrast to direct lighting, indirect illumination comes from the light bouncing between non-emitting surfaces in the scene.
-
 			<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
-				  <tr>
-					<td style="text-align: center;">
-					  <img src="t4.1.png" width="400px"/>
-					  <figcaption>Bunny with Global Illumination</figcaption>
-					</td>
-					<td style="text-align: center;">
-					  <img src="t4.2.png" width="400px"/>
-					  <figcaption>Wall-E with Global Illumination</figcaption>
-					</td>
-				  </tr>
-				  <tr>
-					<td style="text-align: center;">
-					  <img src="t4.3.png" width="400px"/>
-					  <figcaption>Bunny with Direct Illumination Only</figcaption>
-					</td>
-					<td style="text-align: center;">
-					  <img src="t4.4.png" width="400px"/>
-					  <figcaption>Bunny with Indirect Illumination Only</figcaption>
-					</td>
-				  </tr>
+					<tr>
+						<td style="text-align: center;">
+						  <img src="t4.1.png" width="400px"/>
+						  <figcaption>Bunny with Global Illumination</figcaption>
+						</td>
+						<td style="text-align: center;">
+						  <img src="t4.2.png" width="400px"/>
+						  <figcaption>Wall-E with Global Illumination</figcaption>
+						</td>
+					  </tr>
+					  <tr>
+						<td style="text-align: center;">
+						  <img src="t4.3.png" width="400px"/>
+						  <figcaption>Bunny with Direct Illumination Only</figcaption>
+						</td>
+						<td style="text-align: center;">
+						  <img src="t4.4.png" width="400px"/>
+						  <figcaption>Bunny with Indirect Illumination Only</figcaption>
+						</td>
+					  </tr>
+				</table>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
 				  <tr>
 					<td style="text-align: center;">
 					  <img src="a.png" width="400px"/>
@@ -212,6 +215,102 @@
 						<figcaption>Bunny: With Accumulation and Russian Roulette, 1 max-ray-depth</figcaption>
 					  </td>
 				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="g.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 2 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="h.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 2 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="i.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 2 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="j.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 3 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="k.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 3 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="l.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 3 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="m.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 4 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="n.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 4 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="o.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 4 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="p.png" width="400px"/>
+					  <figcaption>Bunny: No Accumulation, 5 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="q.png" width="400px"/>
+					  <figcaption>Bunny: With Accumulation, 5 max-ray-depth</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="r.png" width="400px"/>
+						<figcaption>Bunny: With Accumulation and Russian Roulette, 100 max-ray-depth</figcaption>
+					  </td>
+				  </tr>
+				</table>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					<tr>
+						<td style="text-align: center;">
+						  <img src="1.png" width="400px"/>
+						  <figcaption>Banana with 1 Sample Per Pixel</figcaption>
+						</td>
+						<td style="text-align: center;">
+						  <img src="2.png" width="400px"/>
+						  <figcaption>Banana with 2 Samples Per Pixel</figcaption>
+						</td>
+					  </tr>
+					  <tr>
+						<td style="text-align: center;">
+							<img src="3.png" width="400px"/>
+							<figcaption>Banana with 4 Samples Per Pixel</figcaption>
+						  </td>
+						  <td style="text-align: center;">
+							<img src="4.png" width="400px"/>
+							<figcaption>Banana with 8 Samples Per Pixel</figcaption>
+						  </td>
+					  </tr>
+					  <tr>
+						<td style="text-align: center;">
+						  <img src="5.png" width="400px"/>
+						  <figcaption>Banana with 16 Samples Per Pixel</figcaption>
+						</td>
+						<td style="text-align: center;">
+						  <img src="6.png" width="400px"/>
+						  <figcaption>Banana with 64 Samples Per Pixel</figcaption>
+						</td>
+					  </tr>
+					  <tr>
+						<td style="text-align: center;">
+						  <img src="7.png" width="400px"/>
+						  <figcaption>Banana with 1024 Sample Per Pixel</figcaption>
+						</td>
+					  </tr>
 				</table>
 			</div>
 		
