@@ -133,7 +133,7 @@
 
 		<p>For the plane, I detect when a particle crosses from above to below the plane between frames. If it does, I project it back onto the plane surface, slightly offsetting it to prevent visual artifacts. I also apply friction so the cloth settles smoothly instead of bouncing. Lastly, I made sure to call the <code>collide()</code> function for each <code>collision_object</code> in <code>cloth.cpp</code></p>
 
-		<p>The cloth wraps more tightly around the sphere for lower <code>ks</code> values, and extrudes outwards near the area of collision for higher <code>ks</code>. This is because of the high spring forces resisting bending within the cloth, resulting in more of a tent kind of shape.</p>
+		<p>The cloth wraps more tightly around the sphere for lower <code>ks</code> values, and extrudes outwards near the area of collision for higher <code>ks</code>. This is because of the high spring forces resisting bending within the cloth, resulting in more of a tent kind of shape. It is also worth noting that there are fewer folds in total in the higher <code>ks</code> versions.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
