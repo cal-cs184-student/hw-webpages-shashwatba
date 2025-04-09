@@ -129,7 +129,7 @@
 		</div>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
-		<p>For sphere collisions, I check if a cloth particle has moved inside the sphere by measuring its distance to the center. If it has, I push the particle back to the sphere's surface along the direction from the sphere's center to the particle. I also subtract a small friction adjustment to make the cloth slide naturally across the sphere rather than sticking to it.</p>
+		<p>For sphere collisions, I check if a cloth particle has moved inside the sphere by measuring its distance to the center. If it has, I push the particle back to the sphere's surface along the direction from the sphere's center to the particle by updating its <code>position</code> attribute. I also subtract a small friction adjustment to make the cloth slide naturally across the sphere rather than sticking to it.</p>
 
 		<p>For the plane, I detect when a particle crosses from above to below the plane between frames. If it does, I project it back onto the plane surface, slightly offsetting it to prevent visual artifacts. I also apply friction so the cloth settles smoothly instead of bouncing. Lastly, I made sure to call the <code>collide()</code> function for each <code>collision_object</code> in <code>cloth.cpp</code></p>
 
@@ -160,7 +160,27 @@
 		</div>
 
 		<h2>Part 4: Handling self-collisions</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>For self-collisions, I divided the 3D space into grid cells and hashed each point mass's position to a unique cell ID computed by multiplying the coordinates with large 3 hard coded prime numbers generated online. This works because it maintains uniqueness of hash ids while also keeping things efficient. In <code>build_spatial_map()</code>, I assigned each point mass to a cell based on its position. Then, in <code>self_collide()</code>, each point checks only the nearby masses in its cell. If another mass is too close (within <code>2 * thickness</code>), I computed a correction vector to separate them and applied the average correction (scaled by <code>1 / simulation_steps</code>) to that point.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="4-1.png" width="400px"/>
+				  <figcaption>Early (self-collision iminent)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="4-2.png" width="400px"/>
+				  <figcaption>Initial self-collission</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="4-3.png" width="400px"/>
+				  <figcaption>Final resting stage</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 5: Shaders</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
