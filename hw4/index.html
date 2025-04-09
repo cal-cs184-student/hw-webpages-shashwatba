@@ -75,7 +75,7 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		<p>Spring constant: A lower spring constant results in a lot more ripples while falling. A high spring constant results in a singular motion while falling, with a very even cloth in the final resting stage.</p>
+		<p>Spring constant: A lower spring constant results in a lot more ripples while falling. A high spring constant results in a singular motion while falling, with a very even cloth in the final resting stage. This is because a lower spring constant simulates weaker connections between particles, like a loose net or soft fabric, resulting in more dramatic and chaotic motion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -90,7 +90,7 @@
 			  </tr>
 			</table>
 		</div>
-		<p>Damping: With low damping, the cloth flaps around for quite a while before coming to rest, moving back and forth about the perpendicular angle. With (very) high damping, the cloth only falls once.</p>
+		<p>Damping: Damping simulates internal friction or air resistance. With low damping, the cloth flaps around for quite a while before coming to rest, moving back and forth about the perpendicular angle. With (very) high damping, the cloth only falls once.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -106,7 +106,7 @@
 			</table>
 		</div>
 
-		<p>Density: The high density doesn't come to complete rest (has several tiny ripples going around). The low density cloth converges rather quickly.</p>
+		<p>Density: The high density doesn't come to complete rest (has several tiny ripples going around). The low density cloth converges rather quickly. A higher density increases the mass of the cloth particles, which leads to more inertia. This makes the cloth slower to react to forces and results in prolonged motion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -129,7 +129,35 @@
 		</div>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>For sphere collisions, I check if a cloth particle has moved inside the sphere by measuring its distance to the center. If it has, I push the particle back to the sphere's surface along the direction from the sphere's center to the particle. I also subtract a small friction adjustment to make the cloth slide naturally across the sphere rather than sticking to it.</p>
+
+		<p>For the plane, I detect when a particle crosses from above to below the plane between frames. If it does, I project it back onto the plane surface, slightly offsetting it to prevent visual artifacts. I also apply friction so the cloth settles smoothly instead of bouncing. Lastly, I made sure to call the <code>collide()</code> function for each <code>collision_object</code> in <code>cloth.cpp</code></p>
+
+		<p>The cloth wraps more tightly around the sphere for lower <code>ks</code> values, and extrudes outwards near the area of collision for higher <code>ks</code>. This is because of the high spring forces resisting bending within the cloth, resulting in more of a tent kind of shape.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="3-1.png" width="400px"/>
+				  <figcaption>ks = 5000</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="3-2.png" width="400px"/>
+				  <figcaption>ks = 50000</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="3-3.png" width="400px"/>
+				  <figcaption>ks = 500000</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="3-4.png" width="400px"/>
+					<figcaption>Mesh at rest with the plane</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 4: Handling self-collisions</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
