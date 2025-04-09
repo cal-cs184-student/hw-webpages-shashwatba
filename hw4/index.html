@@ -226,6 +226,7 @@
 		<h2>Part 5: Shaders</h2>
 		<p>A shader program is a small GPU program that determines how 3D models are transformed and colored on screen. The vertex shader transforms vertex positions and normals from model space to screen space while the fragment shader computes the final color for each pixel.</p>
 
+		<p>The Blinn-Phong shading technique is done using three components: constant background light (ambient), the product of the light direction and normal (diffuse) and the reflections depending on viewing angle (specular). Chaning parameter inputs from 0 to 1 enables us to isolate any one component of the model. </p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -236,6 +237,36 @@
 				<td style="text-align: center;">
 				  <img src="diffuse.png" width="400px"/>
 				  <figcaption>Diffuse component</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="specular.png" width="400px"/>
+					<figcaption>Specular component</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="Phong.png" width="400px"/>
+				  <figcaption>Blinn-Phong Shading (complete)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<figure>
+			<img src="texture.png" alt="Cloth draped over sphere" style="width:70%"/>
+			<figcaption>Texture Shader</figcaption>
+		</figure>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="bump1.png" width="400px"/>
+				  <figcaption>Bump shading on the cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="bump2.png" width="400px"/>
+				  <figcaption>Bump shading on the sphere</figcaption>
 				</td>
 			  </tr>
 			  <tr>
