@@ -75,7 +75,58 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Spring constant: A lower spring constant results in a lot more ripples while falling. A high spring constant results in a singular motion while falling, with a very even cloth in the final resting stage.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="2-1.png" width="400px"/>
+				  <figcaption>Low spring constant (1000)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="2-2.png" width="400px"/>
+				  <figcaption>High spring constant (100000)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<p>Damping: With low damping, the cloth flaps around for quite a while before coming to rest, moving back and forth about the perpendicular angle. With (very) high damping, the cloth only falls once.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="2-3.png" width="400px"/>
+				  <figcaption>Low damping (0.03%)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="2-4.png" width="400px"/>
+				  <figcaption>High damping (0.03%)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Density: The high density doesn't come to complete rest (has several tiny ripples going around). The low density cloth converges rather quickly.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="2-6.png" width="400px"/>
+				  <figcaption>Low density (20)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="2-5.png" width="400px"/>
+				  <figcaption>High density (100000)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="2-7.png" width="400px"/>
+				  <figcaption>pinned4.png</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
