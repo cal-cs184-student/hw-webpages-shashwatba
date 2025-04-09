@@ -75,7 +75,7 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		<p>Spring constant: A lower spring constant results in a lot more ripples while falling. A high spring constant results in a singular motion while falling, with a very even cloth in the final resting stage. This is because a lower spring constant simulates weaker connections between particles, like a loose net or soft fabric, resulting in more dramatic and chaotic motion.</p>
+		<p>Spring constant: A lower spring constant results in a lot more ripples while falling. A high spring constant results in a singular motion while falling, with a very even cloth in the final resting stage. This is because a lower spring constant simulates weaker connections between particles, like a loose net or soft fabric, resulting in more dramatic and chaotic motion. The lower spring constant also leads to more folds near the top of the sheet in the final resting stage, due to springs giving in more easily to folds and bends.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -90,23 +90,23 @@
 			  </tr>
 			</table>
 		</div>
-		<p>Damping: Damping simulates internal friction or air resistance. With low damping, the cloth flaps around for quite a while before coming to rest, moving back and forth about the perpendicular angle. With (very) high damping, the cloth only falls once.</p>
+		<p>Damping: Damping simulates internal friction or air resistance. With low damping, the cloth flaps around for quite a while before coming to rest, moving back and forth about the perpendicular angle. With (very) high damping, the cloth only falls once. High dampening also results in the sheet falling in the opposite direction at the top (inward vs. outward) in the final resting stage.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="2-3.png" width="400px"/>
-				  <figcaption>Low damping (0.03%)</figcaption>
+				  <figcaption>Low damping (0.02%)</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="2-4.png" width="400px"/>
-				  <figcaption>High damping (0.03%)</figcaption>
+				  <figcaption>High damping (0.75%)</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 
-		<p>Density: The high density doesn't come to complete rest (has several tiny ripples going around). The low density cloth converges rather quickly. A higher density increases the mass of the cloth particles, which leads to more inertia. This makes the cloth slower to react to forces and results in prolonged motion.</p>
+		<p>Density: The high density doesn't come to complete rest (has several tiny ripples going around). The low density cloth converges rather quickly. A higher density increases the mass of the cloth particles, which leads to more inertia. This makes the cloth slower to react to forces and results in prolonged motion along with a lot more tinier folds near the top of the sheet.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -116,7 +116,7 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="2-5.png" width="400px"/>
-				  <figcaption>High density (100000)</figcaption>
+				  <figcaption>High density (100000) (doesn't come to rest soon enough)</figcaption>
 				</td>
 			  </tr>
 			  <tr>
