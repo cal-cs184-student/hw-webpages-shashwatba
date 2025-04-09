@@ -38,12 +38,6 @@
 
 		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw4-shashwatbansal">https://github.com/cal-cs184-student/sp25-hw4-shashwatbansal</a>
 
-
-		<figure>
-			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
-
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
@@ -181,23 +175,64 @@
 			  </tr>
 			</table>
 		</div>
+		<p>Low spring force results in several tiny folds at the point of self-collission, while higher spring force results in fewer folds during collision, and only a couple folds in the final resting stage because of higher resistence to bending.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="4-4.png" width="400px"/>
+				  <figcaption>Low spring force (500)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="4-5.png" width="400px"/>
+				  <figcaption>High spring force during collision (50000)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="4-6.png" width="400px"/>
+				  <figcaption>High spring force after collision (but before the final resting stage) (50000)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>Density: Low density results in a more wobbly simulation in which there are several tiny ripples, and only a few larger folds. Higher density results in less wobbliness.</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="4-10.png" width="400px"/>
+				  <figcaption>Low density (1)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="4-7.png" width="400px"/>
+				  <figcaption>Low density (5)</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="4-8.png" width="400px"/>
+					<figcaption>Low density (5)</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="4-9.png" width="400px"/>
+				  <figcaption>High density during collision (45)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 5: Shaders</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+
+		<figure>
+			<img src="clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
+			<figcaption>You can add images with captions!</figcaption>
+		</figure>
 		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
